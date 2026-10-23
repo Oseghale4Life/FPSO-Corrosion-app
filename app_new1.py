@@ -94,7 +94,11 @@ def build_feature_row(age, coating_life):
 
 
 def years_to_limit(model, current_age, coating_life,
-                   threshold, offset=0.0, step=0.25):
+                   threshold, offset=0.0, step=0.5):
+    # step = 0.5 yr so the search uses the same age grid as the age slider,
+    # the projection chart and the year-by-year table. A finer 0.25 yr grid
+    # landed on single-age spikes in the ML curve (e.g. age 15.25) that the
+    # chart never shows, giving a false "0.25 yr" life to 1.0 mm.
     age = float(current_age)
     while age <= HORIZON:
         X    = build_feature_row(age, coating_life)
